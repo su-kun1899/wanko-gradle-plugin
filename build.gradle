@@ -1,0 +1,39 @@
+plugins {
+    id 'groovy'
+    id "com.gradle.plugin-publish" version "0.10.0"
+    id "java-gradle-plugin"
+}
+
+group 'red.sukun1899'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+}
+
+gradlePlugin {
+    plugins {
+        wankoPlugin {
+            id = 'red.sukun1899.wanko'
+            implementationClass = 'red.sukun1899.wanko.WankoPlugin'
+        }
+    }
+}
+
+pluginBundle {
+    website = 'https://github.com/su-kun1899/wanko-gradle-plugin'
+    vcsUrl = 'https://github.com/su-kun1899/wanko-gradle-plugin'
+    description = 'Simple sql runner.'
+    tags = ['database', 'sql']
+
+    plugins {
+        wankoPlugin {
+            displayName = 'Wanko gradle plugin'
+        }
+    }
+}
