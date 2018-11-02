@@ -1,5 +1,7 @@
 package red.sukun1899.wanko.task
 
+import org.gradle.api.Project
+import org.gradle.testfixtures.ProjectBuilder
 import spock.lang.Specification
 
 /**
@@ -7,8 +9,13 @@ import spock.lang.Specification
  */
 class WankoTaskSpec extends Specification {
     def "hello"() {
+        given:
+        Project project = ProjectBuilder.builder().build()
+        project.pluginManager.apply 'red.sukun1899.wanko'
+        def sut = project.tasks.wanko as WankoTask
+
         when:
-        new WankoTask().loadData()
+        sut.loadData()
 
         then:
         true
