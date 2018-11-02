@@ -14,11 +14,11 @@ class WankoTask extends DefaultTask {
         println("hoge") // TODO
 
         // TODO オプションとして受け取るようにする
-        def sql = Sql.newInstance(
-                "jdbc:postgresql://localhost:25432/gengar-sayque",
-                "gengar",
-                "gengar",
-                "org.postgresql.Driver"
-        )
+//        def sql = Sql.newInstance(
+//                "jdbc:postgresql://localhost:25432/gengar-sayque",
+//                "gengar",
+//                "gengar",
+//                "org.postgresql.Driver"
+//        )
     }
 }
