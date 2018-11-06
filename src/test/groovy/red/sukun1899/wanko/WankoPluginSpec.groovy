@@ -8,6 +8,7 @@ import spock.lang.Specification
  * @author su-kun1899
  */
 class WankoPluginSpec extends Specification {
+
     def "Apply wanko plugin"() {
         given:
         def project = ProjectBuilder.builder().build()
@@ -19,24 +20,5 @@ class WankoPluginSpec extends Specification {
         project.plugins[0] instanceof WankoPlugin
         project.extensions.wanko instanceof WankoExtension
         project.tasks.wankoLoad instanceof WankoLoadTask
-    }
-
-    def "Mapping extension properties to task properties"() {
-        given:
-        def project = ProjectBuilder.builder().build()
-        def extension = project.extensions.create('wanko', WankoExtension)
-        extension.url = "jdbc:postgresql://localhost:5432/postgres"
-        extension.user = "postgres"
-        extension.password = "postgres"
-        extension.driverClassName = "org.postgresql.Driver"
-
-        when:
-        def task = project.tasks.create('wankoLoad', WankoLoadTask)
-
-        then:
-        task.url == extension.url
-        task.user == extension.user
-        task.password == extension.password
-        task.driverClassName == extension.driverClassName
     }
 }
