@@ -17,9 +17,8 @@ class WankoPluginSpec extends Specification {
         project.pluginManager.apply 'red.sukun1899.wanko'
 
         then:
+        project.plugins[0] instanceof WankoPlugin
         project.extensions.wanko instanceof WankoExtension
-
-        and:
         project.tasks.wankoLoad instanceof WankoLoadTask
     }
 }
