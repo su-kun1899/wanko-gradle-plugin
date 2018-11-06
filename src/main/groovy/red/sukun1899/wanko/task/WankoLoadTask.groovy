@@ -7,7 +7,7 @@ import org.gradle.api.tasks.TaskAction
 /**
  * @author su-kun1899
  */
-class WankoTask extends DefaultTask {
+class WankoLoadTask extends DefaultTask {
     @TaskAction
     def loadData() {
         println("Not implemented") // TODO
