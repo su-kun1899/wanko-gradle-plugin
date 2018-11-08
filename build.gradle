@@ -1,9 +1,3 @@
-buildscript {
-    dependencies {
-        classpath "org.postgresql:postgresql:42.2.0"
-    }
-}
-
 plugins {
     id 'groovy'
     id "com.gradle.plugin-publish" version "0.10.0"
@@ -20,6 +14,7 @@ repositories {
 dependencies {
     implementation gradleApi()
     implementation localGroovy()
+    implementation 'postgresql:postgresql:9.0-801.jdbc4'
     testImplementation gradleTestKit()
     testImplementation ("org.spockframework:spock-core:1.2-groovy-2.4") {
         // FIXME groovy-all is loaded in version 2.4.12 and you are trying to load version 2.4.15

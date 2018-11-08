@@ -17,6 +17,16 @@ class WankoPluginBuildSpec extends Specification {
         testProjectDir.create()
         buildFile = testProjectDir.newFile 'build.gradle'
         buildFile << """
+            buildscript {
+                repositories {
+                    mavenCentral()
+                }
+            
+                dependencies {
+                    classpath 'postgresql:postgresql:9.0-801.jdbc4'
+                }
+            }
+            
             plugins {
                 id "red.sukun1899.wanko"
             }
