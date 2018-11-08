@@ -16,30 +16,36 @@ class WankoPluginBuildSpec extends Specification {
         testProjectDir = new TemporaryFolder()
         testProjectDir.create()
         buildFile = testProjectDir.newFile 'build.gradle'
+        buildFile << """
+            plugins {
+                id "red.sukun1899.wanko"
+            }
+        """
     }
 
     def cleanup() {
         testProjectDir.delete()
     }
 
-    def "hello world task prints hello world"() {
+    def "Load task"() {
         given:
         buildFile << """
-            task helloWorld {
-                doLast {
-                    println 'Hello world!'
-                }
+            wanko {
+                url = 'jdbc:postgresql://localhost:25432/gengar-sayque'
+                user = 'gengar'
+                password = 'gengar'
+                driverClassName = 'org.postgresql.Driver'
             }
         """
 
         when:
         def result = GradleRunner.create()
                 .withProjectDir(testProjectDir.root)
-                .withArguments('helloWorld')
+                .withArguments('wankoLoad')
+                .withPluginClasspath()
                 .build()
 
         then:
-        result.output.contains('Hello world!')
-        result.task(":helloWorld").outcome == TaskOutcome.SUCCESS
+        result.task(":wankoLoad").outcome == TaskOutcome.SUCCESS
     }
 }

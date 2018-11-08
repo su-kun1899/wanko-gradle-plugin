@@ -22,6 +22,7 @@ class WankoLoadTask extends DefaultTask {
 
         // TODO SQLの実行
         println("Not implemented") // TODO
+        println("Hello Testkit2") // TODO
 //        def sql = Sql.newInstance(
 //                "jdbc:postgresql://localhost:25432/postgres",
 //                "postgres",
