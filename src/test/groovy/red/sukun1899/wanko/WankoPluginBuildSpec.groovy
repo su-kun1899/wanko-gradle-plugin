@@ -30,6 +30,18 @@ class WankoPluginBuildSpec extends Specification {
             plugins {
                 id "red.sukun1899.wanko"
             }
+            
+            repositories {
+                mavenCentral()
+            }
+            
+            configurations {
+                jdbcdriver
+            }
+            
+            dependencies {
+                jdbcdriver 'com.h2database:h2:1.3.173','org.postgresql:postgresql:9.3-1100-jdbc41'
+            }            
         """
     }
 
@@ -41,9 +53,9 @@ class WankoPluginBuildSpec extends Specification {
         given:
         buildFile << """
             wanko {
-                url = 'jdbc:postgresql://localhost:25432/gengar-sayque'
-                user = 'gengar'
-                password = 'gengar'
+                url = 'jdbc:postgresql://localhost:35432/postgres'
+                user = 'postgres'
+                password = 'wanko'
                 driverClassName = 'org.postgresql.Driver'
             }
         """
@@ -53,6 +65,7 @@ class WankoPluginBuildSpec extends Specification {
                 .withProjectDir(testProjectDir.root)
                 .withArguments('wankoLoad')
                 .withPluginClasspath()
+                .withDebug(true)
                 .build()
 
         then:

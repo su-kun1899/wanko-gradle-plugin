@@ -24,11 +24,17 @@ class WankoLoadTask extends DefaultTask {
         // TODO SQLの実行
         println("Not implemented") // TODO
         println("Hello Testkit2") // TODO
+
+        def loader = GroovyObject.class.classLoader
+        project.configurations.jdbcdriver.each {File file ->
+            loader.addURL(file.toURI().toURL())
+        }
+//        Sql.classLoader.addURL("postgresql:postgresql:9.0-801.jdbc4".toURI().toURL())
         def sql = Sql.newInstance(
-                "jdbc:postgresql://localhost:25432/postgres",
-                "postgres",
-                "postgres",
-                "org.postgresql.Driver"
+                url.get(),
+                user.get(),
+                password.get(),
+                driverClassName.get(),
         )
     }
 }
