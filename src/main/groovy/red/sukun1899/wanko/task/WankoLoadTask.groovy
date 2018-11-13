@@ -25,10 +25,13 @@ class WankoLoadTask extends DefaultTask {
         println("Not implemented") // TODO
         println("Hello Testkit2") // TODO
 
+        // For load driver class
+        // https://discuss.gradle.org/t/jdbc-driver-class-cannot-be-loaded-with-gradle-2-0-but-worked-with-1-12/2277/6
         def loader = Sql.classLoader
-        project.configurations.jdbcdriver.each { File file ->
+        project.buildscript.configurations.classpath.each { File file ->
             loader.addURL(file.toURI().toURL())
         }
+
         def sql = Sql.newInstance(
                 url.get(),
                 user.get(),
