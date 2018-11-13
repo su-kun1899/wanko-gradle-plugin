@@ -50,6 +50,14 @@ class WankoPluginBuildSpec extends Specification {
             }
         """
 
+        and:
+        testProjectDir.newFolder('sql')
+        def sql = testProjectDir.newFile('sql' + File.separator + 'hoge.sql')
+        sql << """
+            SELECT * FROM pg_catalog.pg_tables;
+        """
+
+
         when:
         def result = GradleRunner.create()
                 .withProjectDir(testProjectDir.root)

@@ -37,7 +37,12 @@ class WankoLoadTask extends DefaultTask {
         )
 
         def result = sql.firstRow("SELECT * FROM pg_catalog.pg_tables")
-        println result
-        println "hoge"
+
+        // TODO 拡張子sqlでfilter
+        // TODO 名前でsort
+        // TODO filetreeを使えば階層ディレクトリも対応可能？
+        // project.fileTree('.').collect { it as File }.sort()
+        def fileNames = project.file('sql').listFiles().collect { it.name }
+        println(fileNames)
     }
 }
