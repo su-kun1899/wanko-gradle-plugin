@@ -49,6 +49,7 @@ class WankoPluginBuildSpec extends Specification {
                 user = 'postgres'
                 password = 'wanko'
                 driverClassName = 'org.postgresql.Driver'
+                sqlDir = 'sql'
             }
         """
 

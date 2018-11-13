@@ -4,6 +4,7 @@ import groovy.sql.Sql
 import org.gradle.api.DefaultTask
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.TaskAction
+import red.sukun1899.wanko.WankoExtension
 
 /**
  * @author su-kun1899
@@ -13,13 +14,42 @@ class WankoLoadTask extends DefaultTask {
     Property<String> user = project.objects.property(String)
     Property<String> password = project.objects.property(String)
     Property<String> driverClassName = project.objects.property(String)
+    WankoExtension extension
+    String sqlDir
+    WankoConfig config
+
+    WankoLoadTask() {
+        extension = project.extensions.getByName("wanko") as WankoExtension
+        this.config = new ExtensionConfig(extension)
+    }
+
+    class ExtensionConfig implements WankoConfig {
+        WankoExtension extension
+
+        ExtensionConfig(WankoExtension extension) {
+            this.extension = extension
+        }
+
+        @Override
+        String getSqlDir() {
+            return this.extension.sqlDir
+        }
+    }
+
+//    WankoLoadTask(WankoConfig config) {
+//        this.config = config
+//    }
+
+    interface WankoConfig {
+        String getSqlDir()
+    }
 
     @TaskAction
     def loadData() {
-        println("url=${url.get()}")
-        println("user=${user.get()}")
-        println("password=${password.get()}")
-        println("driverClassName=${driverClassName.get()}")
+        println("url=${this.extension.url}")
+        println("user=${this.extension.user}")
+        println("password=${this.extension.password}")
+        println("driverClassName=${this.extension.driverClassName}")
 
         // TODO SQLの実行
         println("Not implemented") // TODO
@@ -33,10 +63,10 @@ class WankoLoadTask extends DefaultTask {
         }
 
         def sql = Sql.newInstance(
-                url.get(),
-                user.get(),
-                password.get(),
-                driverClassName.get(),
+                this.extension.url,
+                this.extension.user,
+                this.extension.password,
+                this.extension.driverClassName,
         )
 
         def result = sql.firstRow("SELECT * FROM pg_catalog.pg_tables")
