@@ -26,15 +26,18 @@ class WankoLoadTask extends DefaultTask {
         println("Hello Testkit2") // TODO
 
         def loader = Sql.classLoader
-//        project.configurations.jdbcdriver.each {File file ->
-//            loader.addURL(file.toURI().toURL())
-//        }
-        loader.addURL(project.configurations.jdbcdriver.toURI().toURL())
+        project.configurations.jdbcdriver.each { File file ->
+            loader.addURL(file.toURI().toURL())
+        }
         def sql = Sql.newInstance(
                 url.get(),
                 user.get(),
                 password.get(),
                 driverClassName.get(),
         )
+
+        def result = sql.firstRow("SELECT * FROM pg_catalog.pg_tables")
+        println result
+        println "hoge"
     }
 }
