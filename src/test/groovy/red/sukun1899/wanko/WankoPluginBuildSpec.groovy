@@ -16,17 +16,7 @@ class WankoPluginBuildSpec extends Specification {
         testProjectDir = new TemporaryFolder()
         testProjectDir.create()
         buildFile = testProjectDir.newFile 'build.gradle'
-        buildFile << """
-            buildscript {
-                repositories {
-                    mavenCentral()
-                }
-            
-                dependencies {
-                    classpath 'postgresql:postgresql:9.0-801.jdbc4'
-                }
-            }
-            
+        buildFile << """          
             plugins {
                 id "red.sukun1899.wanko"
             }
@@ -40,7 +30,7 @@ class WankoPluginBuildSpec extends Specification {
             }
             
             dependencies {
-                jdbcdriver 'com.h2database:h2:1.3.173','org.postgresql:postgresql:9.3-1100-jdbc41'
+                jdbcdriver 'org.postgresql:postgresql:9.3-1100-jdbc41'
             }            
         """
     }
