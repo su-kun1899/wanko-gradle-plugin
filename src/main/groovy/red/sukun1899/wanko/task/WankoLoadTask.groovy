@@ -2,58 +2,33 @@ package red.sukun1899.wanko.task
 
 import groovy.sql.Sql
 import org.gradle.api.DefaultTask
-import org.gradle.api.provider.Property
 import org.gradle.api.tasks.TaskAction
 import red.sukun1899.wanko.WankoExtension
+import red.sukun1899.wanko.config.ExtensionConfig
+import red.sukun1899.wanko.config.WankoConfig
 
 /**
  * @author su-kun1899
  */
 class WankoLoadTask extends DefaultTask {
-    Property<String> url = project.objects.property(String)
-    Property<String> user = project.objects.property(String)
-    Property<String> password = project.objects.property(String)
-    Property<String> driverClassName = project.objects.property(String)
-    WankoExtension extension
-    String sqlDir
     WankoConfig config
 
     WankoLoadTask() {
-        extension = project.extensions.getByName("wanko") as WankoExtension
-        this.config = new ExtensionConfig(extension)
-    }
-
-    class ExtensionConfig implements WankoConfig {
-        WankoExtension extension
-
-        ExtensionConfig(WankoExtension extension) {
-            this.extension = extension
+        def extension = project.extensions.findByName("wanko")
+        if (extension == null) {
+            return
         }
-
-        @Override
-        String getSqlDir() {
-            return this.extension.sqlDir
-        }
-    }
-
-//    WankoLoadTask(WankoConfig config) {
-//        this.config = config
-//    }
-
-    interface WankoConfig {
-        String getSqlDir()
+        this.config = new ExtensionConfig(extension: extension as WankoExtension)
     }
 
     @TaskAction
     def loadData() {
-        println("url=${this.extension.url}")
-        println("user=${this.extension.user}")
-        println("password=${this.extension.password}")
-        println("driverClassName=${this.extension.driverClassName}")
-
-        // TODO SQLの実行
-        println("Not implemented") // TODO
-        println("Hello Testkit2") // TODO
+        // TODO 削除
+        println("url=${this.config.url()}")
+        println("user=${this.config.user()}")
+        println("password=${this.config.password()}")
+        println("driverClassName=${this.config.driverClassName()}")
+        println("sqlDir=${this.config.sqlDir()}")
 
         // For load driver class
         // https://discuss.gradle.org/t/jdbc-driver-class-cannot-be-loaded-with-gradle-2-0-but-worked-with-1-12/2277/6
@@ -63,10 +38,10 @@ class WankoLoadTask extends DefaultTask {
         }
 
         def sql = Sql.newInstance(
-                this.extension.url,
-                this.extension.user,
-                this.extension.password,
-                this.extension.driverClassName,
+                this.config.url(),
+                this.config.user(),
+                this.config.password(),
+                this.config.driverClassName(),
         )
 
         def result = sql.firstRow("SELECT * FROM pg_catalog.pg_tables")
