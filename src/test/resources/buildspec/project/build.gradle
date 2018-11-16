@@ -1,0 +1,21 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'org.postgresql:postgresql:9.3-1100-jdbc41'
+    }
+}
+
+plugins {
+    id "red.sukun1899.wanko"
+}
+
+wanko {
+    url = 'jdbc:postgresql://localhost:35432/postgres'
+    user = 'postgres'
+    password = 'wanko'
+    driverClassName = 'org.postgresql.Driver'
+    sqlDir = 'sql'
+}
