@@ -3,13 +3,15 @@ package red.sukun1899.wanko
 import org.gradle.internal.impldep.org.junit.rules.TemporaryFolder
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
+import red.sukun1899.wanko.test.DatabaseProperties
 import spock.lang.Specification
 
 /**
  * @author su-kun1899
  */
 class WankoPluginBuildSpec extends Specification {
-    final TemporaryFolder testProjectDir = new TemporaryFolder()
+    final def testProjectDir = new TemporaryFolder()
+    final def databaseProps = new DatabaseProperties()
     File buildFile
 
     def setup() {
@@ -43,13 +45,13 @@ class WankoPluginBuildSpec extends Specification {
             SELECT * FROM pg_catalog.pg_tables;
         """
 
-        // TODO 接続先情報を外部ファイルに
+        and:
         buildFile << """
             wanko {
-                url = 'jdbc:postgresql://localhost:35432/postgres'
-                user = 'postgres'
-                password = 'wanko'
-                driverClassName = 'org.postgresql.Driver'
+                url = '${databaseProps.url}'
+                user = '${databaseProps.user}'
+                password = '${databaseProps.password}'
+                driverClassName = '${databaseProps.driverClassName}'
                 sqlDir = '${sqlDir.absolutePath}'
             }
         """
