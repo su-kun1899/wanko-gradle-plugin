@@ -4,7 +4,6 @@ import groovy.sql.Sql
 import org.gradle.internal.impldep.org.junit.rules.TemporaryFolder
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
-import red.sukun1899.wanko.test.DatabaseProperties
 import spock.lang.Specification
 
 /**

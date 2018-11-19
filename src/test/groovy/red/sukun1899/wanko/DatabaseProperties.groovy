@@ -1,4 +1,4 @@
-package red.sukun1899.wanko.test
+package red.sukun1899.wanko
 
 /**
  * @author su-kun1899
