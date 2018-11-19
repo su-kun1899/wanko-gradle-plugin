@@ -1,5 +1,6 @@
 package red.sukun1899.wanko
 
+import groovy.sql.Sql
 import org.gradle.internal.impldep.org.junit.rules.TemporaryFolder
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
@@ -13,6 +14,7 @@ class WankoPluginBuildSpec extends Specification {
     final def testProjectDir = new TemporaryFolder()
     final def databaseProps = new DatabaseProperties()
     File buildFile
+    Sql sql
 
     def setup() {
         testProjectDir.create()
@@ -32,6 +34,12 @@ class WankoPluginBuildSpec extends Specification {
                 id "red.sukun1899.wanko"
             }
         """
+        sql = Sql.newInstance(
+                databaseProps.url,
+                databaseProps.user,
+                databaseProps.password,
+                databaseProps.driverClassName,
+        )
     }
 
     def cleanup() {
@@ -41,8 +49,12 @@ class WankoPluginBuildSpec extends Specification {
     def "Load task"() {
         given:
         def sqlDir = testProjectDir.newFolder("sql")
-        testProjectDir.newFile("sql" + File.separator + "foo.sql") << """
-            SELECT * FROM pg_catalog.pg_tables;
+        testProjectDir.newFile("sql" + File.separator + "1_create_table.sql") << """
+            CREATE TABLE person (
+              id CHAR(36) PRIMARY KEY,
+              name VARCHAR (10) NOT NULL,
+              age INT NOT NULL
+            );
         """
 
         and:
@@ -67,5 +79,8 @@ class WankoPluginBuildSpec extends Specification {
         then:
         result.task(":wankoLoad").outcome == TaskOutcome.SUCCESS
         println(result.output)
+
+        cleanup:
+        sql.execute("DROP TABLE person;")
     }
 }

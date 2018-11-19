@@ -23,13 +23,6 @@ class WankoLoadTask extends DefaultTask {
 
     @TaskAction
     def loadData() {
-        // TODO 削除
-        println("url=${this.config.url()}")
-        println("user=${this.config.user()}")
-        println("password=${this.config.password()}")
-        println("driverClassName=${this.config.driverClassName()}")
-        println("sqlDir=${this.config.sqlDir()}")
-
         // For load driver class
         // https://discuss.gradle.org/t/jdbc-driver-class-cannot-be-loaded-with-gradle-2-0-but-worked-with-1-12/2277/6
         def loader = Sql.classLoader
@@ -44,13 +37,10 @@ class WankoLoadTask extends DefaultTask {
                 this.config.driverClassName(),
         )
 
-        def result = sql.firstRow("SELECT * FROM pg_catalog.pg_tables")
-
         // TODO 拡張子sqlでfilter
-        // TODO 名前でsort
-        // TODO filetreeを使えば階層ディレクトリも対応可能？
         def sqlFiles = project.fileTree(this.config.sqlDir()).collect { it as File }.sort()
-        sqlFiles.each { logger.info it.name }
-//        project.file('sql').listFiles().collect { it.name }
+        sqlFiles.each {
+            sql.execute(it.text)
+        }
     }
 }
