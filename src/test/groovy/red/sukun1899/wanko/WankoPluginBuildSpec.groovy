@@ -38,6 +38,11 @@ class WankoPluginBuildSpec extends Specification {
 
     def "Load task"() {
         given:
+        def sqlDir = testProjectDir.newFolder("sql")
+        testProjectDir.newFile("sql" + File.separator + "foo.sql") << """
+            SELECT * FROM pg_catalog.pg_tables;
+        """
+
         // TODO 接続先情報を外部ファイルに
         buildFile << """
             wanko {
@@ -45,7 +50,7 @@ class WankoPluginBuildSpec extends Specification {
                 user = 'postgres'
                 password = 'wanko'
                 driverClassName = 'org.postgresql.Driver'
-                sqlDir = 'sql'
+                sqlDir = '${sqlDir.absolutePath}'
             }
         """
 
