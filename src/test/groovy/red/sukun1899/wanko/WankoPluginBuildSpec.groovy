@@ -55,6 +55,9 @@ class WankoPluginBuildSpec extends Specification {
               age INT NOT NULL
             );
         """
+        testProjectDir.newFile("sql" + File.separator + "dummy.txt") << """
+            It should be skipped.
+        """
 
         and:
         buildFile << """

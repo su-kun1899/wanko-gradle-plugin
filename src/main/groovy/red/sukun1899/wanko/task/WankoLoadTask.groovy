@@ -37,8 +37,10 @@ class WankoLoadTask extends DefaultTask {
                 this.config.driverClassName(),
         )
 
-        // TODO 拡張子sqlでfilter
-        def sqlFiles = project.fileTree(this.config.sqlDir()).collect { it as File }.sort()
+        def sqlFiles = project.fileTree(this.config.sqlDir())
+                .collect { it as File }
+                .findAll { it.name.endsWith '.sql' }
+                .sort()
         sqlFiles.each {
             sql.execute(it.text)
         }
