@@ -10,10 +10,10 @@ import red.sukun1899.wanko.config.WankoConfig
 /**
  * @author su-kun1899
  */
-class WankoLoadTask extends DefaultTask {
+class WankoRunTask extends DefaultTask {
     WankoConfig config
 
-    WankoLoadTask() {
+    WankoRunTask() {
         def extension = project.extensions.findByName("wanko")
         if (extension == null) {
             return

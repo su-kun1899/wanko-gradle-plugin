@@ -73,13 +73,13 @@ class WankoPluginBuildSpec extends Specification {
         when:
         def result = GradleRunner.create()
                 .withProjectDir(testProjectDir.root)
-                .withArguments('wankoLoad')
+                .withArguments('wankoRun')
                 .withPluginClasspath()
                 .withDebug(true)
                 .build()
 
         then:
-        result.task(":wankoLoad").outcome == TaskOutcome.SUCCESS
+        result.task(":wankoRun").outcome == TaskOutcome.SUCCESS
         println(result.output)
 
         cleanup:
