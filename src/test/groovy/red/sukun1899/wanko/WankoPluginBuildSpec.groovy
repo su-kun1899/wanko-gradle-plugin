@@ -55,8 +55,12 @@ class WankoPluginBuildSpec extends Specification {
               age INT NOT NULL
             );
         """
-        testProjectDir.newFile("sql" + File.separator + "dummy.txt") << """
+        testProjectDir.newFile("sql" + File.separator + "2_dummy.txt") << """
             It should be skipped.
+        """
+        testProjectDir.newFile("sql" + File.separator + "3_insert.sql") << """
+            INSERT INTO person VALUES ('${UUID.randomUUID().toString()}', 'Alice', 18);
+            INSERT INTO person VALUES ('${UUID.randomUUID().toString()}', 'Bob', 34);
         """
 
         and:
@@ -80,7 +84,10 @@ class WankoPluginBuildSpec extends Specification {
 
         then:
         result.task(":wankoRun").outcome == TaskOutcome.SUCCESS
-        println(result.output)
+
+        and:
+        def rows = sql.rows("""SELECT * FROM person;""")
+        rows.size() == 2
 
         cleanup:
         sql.execute("DROP TABLE person;")
