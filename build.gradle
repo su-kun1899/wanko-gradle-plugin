@@ -15,7 +15,7 @@ dependencies {
     implementation gradleApi()
     implementation localGroovy()
     testImplementation gradleTestKit()
-    testImplementation ("org.spockframework:spock-core:1.2-groovy-2.4") {
+    testImplementation("org.spockframework:spock-core:1.2-groovy-2.4") {
         // FIXME groovy-all is loaded in version 2.4.12 and you are trying to load version 2.4.15
         // refs: https://qiita.com/ksoichiro/items/6479d71a7712a2f49c19
         exclude group: 'org.codehaus.groovy', module: 'groovy-all'
@@ -46,3 +46,36 @@ pluginBundle {
         }
     }
 }
+
+task setupTestDatabase(type: Exec) {
+    commandLine 'docker'
+    args = [
+            'run',
+            '--rm',
+            '--name', 'wanko_db',
+            '-e', 'POSTGRES_USER=wanko_user',
+            '-e', 'POSTGRES_PASSWORD=wanko_pass',
+            '-e', 'POSTGRES_DB=wanko_db',
+            '-p', '5432:5432',
+            '-d', 'postgres:10'
+    ]
+    doLast {
+        logger.info 'database started.'
+    }
+}
+
+task cleanupTestDatabase(type: Exec) {
+    commandLine 'docker'
+    args = ['stop', 'wanko_db']
+    doLast {
+        logger.info 'database stopped.'
+    }
+}
+
+task localTest(dependsOn: [setupTestDatabase, test]){
+    doLast {
+        println 'test completed.'
+    }
+}
+test.mustRunAfter setupTestDatabase
+localTest.finalizedBy cleanupTestDatabase
