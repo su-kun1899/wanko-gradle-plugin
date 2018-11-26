@@ -22,7 +22,7 @@ class WankoRunTask extends DefaultTask {
     }
 
     @TaskAction
-    def loadData() {
+    def executeSql() {
         // For load driver class
         // https://discuss.gradle.org/t/jdbc-driver-class-cannot-be-loaded-with-gradle-2-0-but-worked-with-1-12/2277/6
         def loader = Sql.classLoader
