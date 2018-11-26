@@ -45,7 +45,7 @@ class WankoPluginBuildSpec extends Specification {
         testProjectDir.delete()
     }
 
-    def "Load task"() {
+    def "Run task (execute sql files)"() {
         given:
         def sqlDir = testProjectDir.newFolder("sql")
         testProjectDir.newFile("sql" + File.separator + "1_create_table.sql") << """
@@ -61,6 +61,13 @@ class WankoPluginBuildSpec extends Specification {
         testProjectDir.newFile("sql" + File.separator + "3_insert.sql") << """
             INSERT INTO person VALUES ('${UUID.randomUUID().toString()}', 'Alice', 18);
             INSERT INTO person VALUES ('${UUID.randomUUID().toString()}', 'Bob', 34);
+        """
+
+        and: 'execute sql files recursively'
+        testProjectDir.newFolder("sql", "sub")
+        testProjectDir.newFile("sql" + File.separator + "sub" + File.separator + "0_insert.sql") << """
+            INSERT INTO person VALUES ('${UUID.randomUUID().toString()}', 'Charlie', 22);
+            INSERT INTO person VALUES ('${UUID.randomUUID().toString()}', 'Dave', 41);
         """
 
         and:
@@ -87,7 +94,7 @@ class WankoPluginBuildSpec extends Specification {
 
         and:
         def rows = sql.rows("""SELECT * FROM person;""")
-        rows.size() == 2
+        rows.size() == 4
 
         cleanup:
         sql.execute("DROP TABLE person;")
