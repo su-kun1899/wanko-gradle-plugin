@@ -40,3 +40,16 @@ jobs:
     - run:
         name: run tests
         command: ./gradlew test
+
+    - store_artifacts:
+        path: ~/repo/build/libs
+        destination: libs
+
+    - store_artifacts:
+        path: ~/repo/build/reports
+        destination: reports
+
+# TODO masterのときのみやる
+#    - store_artifacts:
+#        path: ~/repo/build/docs
+#        destination: docs
