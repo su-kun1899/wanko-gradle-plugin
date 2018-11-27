@@ -42,12 +42,14 @@ jobs:
         command: ./gradlew test
 
     - store_artifacts:
-        path: ~/repo/build/libs
-        destination: libs
-
-    - store_artifacts:
         path: ~/repo/build/reports
         destination: reports
+
+# TODO buildしないと生成されない。不要かも？
+#    - store_artifacts:
+#        path: ~/repo/build/libs
+#        destination: libs
+
 
 # TODO masterのときのみやる
 #    - store_artifacts:
