@@ -45,7 +45,7 @@ jobs:
         path: ~/repo/build/reports
         destination: reports
 
-  Hello-World:
+  deploy:
     docker:
     - image: circleci/openjdk:8-jdk
 
@@ -66,10 +66,13 @@ jobs:
 #        destination: docs
 workflows:
   version: 2
-  Example_Workflow:
+  build-deploy:
     jobs:
     - build
-    - Hello-World:
+    - Deploy_Approval:
         type: approval
         requires:
         - build
+    - deploy:
+        requires:
+        - Deploy_Approval
