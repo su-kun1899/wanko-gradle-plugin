@@ -45,11 +45,20 @@ jobs:
         path: ~/repo/build/reports
         destination: reports
 
+  Hello-World:
+    docker:
+    - image: circleci/openjdk:8-jdk
+
+    steps:
+    - run:
+        name: Hello World
+        command: |
+          echo 'Hello World!'
+
 # TODO buildしないと生成されない。不要かも？
 #    - store_artifacts:
 #        path: ~/repo/build/libs
 #        destination: libs
-
 
 # TODO masterのときのみやる
 #    - store_artifacts:
