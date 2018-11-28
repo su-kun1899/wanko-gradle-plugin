@@ -2,6 +2,7 @@ package red.sukun1899.wanko.task
 
 import groovy.sql.Sql
 import org.gradle.api.DefaultTask
+import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import red.sukun1899.wanko.WankoExtension
 import red.sukun1899.wanko.config.ExtensionConfig
@@ -11,6 +12,7 @@ import red.sukun1899.wanko.config.WankoConfig
  * @author su-kun1899
  */
 class WankoRunTask extends DefaultTask {
+    @Input
     WankoConfig config
 
     WankoRunTask() {
