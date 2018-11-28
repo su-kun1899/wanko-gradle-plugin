@@ -41,7 +41,7 @@ jobs:
         name: run tests
         command: ./gradlew test
 
-    - store_artifacts:
+    - store_test_results:
         path: ~/repo/build/reports
         destination: reports
 
