@@ -64,3 +64,12 @@ jobs:
 #    - store_artifacts:
 #        path: ~/repo/build/docs
 #        destination: docs
+workflows:
+  version: 2
+  Example_Workflow:
+    jobs:
+    - build
+    - Hello-World:
+        type: approval
+        requires:
+        - build
