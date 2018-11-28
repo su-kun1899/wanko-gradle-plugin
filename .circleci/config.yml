@@ -66,13 +66,16 @@ jobs:
 #        destination: docs
 workflows:
   version: 2
-  build-deploy:
+  build_deploy:
     jobs:
     - build
     - Deploy_Approval:
         type: approval
         requires:
         - build
+        filters:
+          branches:
+            only: master
     - deploy:
         requires:
         - Deploy_Approval
