@@ -49,21 +49,23 @@ jobs:
     docker:
     - image: circleci/openjdk:8-jdk
 
+    working_directory: ~/repo
+
+    environment:
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+
     steps:
+    - checkout
+
     - run:
-        name: Hello World
         command: |
-          echo 'Hello World!'
+          ./gradlew build --exclude-task test
 
-# TODO buildしないと生成されない。不要かも？
-#    - store_artifacts:
-#        path: ~/repo/build/libs
-#        destination: libs
+    - store_artifacts:
+        path: ~/repo/build/libs
+        destination: libs
 
-# TODO masterのときのみやる
-#    - store_artifacts:
-#        path: ~/repo/build/docs
-#        destination: docs
 workflows:
   version: 2
   build_deploy:
