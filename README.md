@@ -2,7 +2,23 @@
 
 [![CircleCI](https://circleci.com/gh/su-kun1899/wanko-gradle-plugin/tree/master.svg?style=svg)](https://circleci.com/gh/su-kun1899/wanko-gradle-plugin/tree/master)
 
+A gradle plugin, simple sql runner.
+
 ## Usage
+
+After applying the plugin, you have to add a little configurations.
+
+First, add dependencies for Driver's classpath.
+
+Next, add configurations for your database and prepare sql files.
+
+Last, run the plugin.
+
+```bash
+$ gradle wankoRun
+``` 
+
+### Configuration example
 
 ```groovy
 buildscript {
