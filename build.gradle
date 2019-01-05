@@ -20,7 +20,7 @@ dependencies {
         // refs: https://qiita.com/ksoichiro/items/6479d71a7712a2f49c19
         exclude group: 'org.codehaus.groovy', module: 'groovy-all'
     }
-    testRuntime "net.bytebuddy:byte-buddy:1.8.21"
+    testRuntime "net.bytebuddy:byte-buddy:1.9.6"
     testRuntime "org.objenesis:objenesis:3.0.1"
     testRuntime "org.postgresql:postgresql:42.2.5"
 }
