@@ -25,7 +25,7 @@ class WankoPluginBuildSpec extends Specification {
                 }
             
                 dependencies {
-                    classpath 'org.postgresql:postgresql:9.3-1100-jdbc41'
+                    classpath 'org.postgresql:postgresql:42.2.5'
                 }
             }
             
