@@ -21,7 +21,7 @@ dependencies {
         exclude group: 'org.codehaus.groovy', module: 'groovy-all'
     }
     testRuntime "net.bytebuddy:byte-buddy:1.8.21"
-    testRuntime "org.objenesis:objenesis:2.6"
+    testRuntime "org.objenesis:objenesis:3.0.1"
     testRuntime "org.postgresql:postgresql:42.2.5"
 }
 
