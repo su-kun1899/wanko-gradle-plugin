@@ -80,7 +80,7 @@ workflows:
         - build
         filters:
           branches:
-            only: /release.*/
+            only: /v.*/
     - deploy:
         requires:
         - Deploy_Approval
