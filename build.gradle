@@ -22,7 +22,7 @@ dependencies {
     }
     testRuntime "net.bytebuddy:byte-buddy:1.10.1"
     testRuntime "org.objenesis:objenesis:3.1"
-    testRuntime "org.postgresql:postgresql:42.2.8"
+    testRuntime "org.postgresql:postgresql:42.2.13"
 }
 
 gradlePlugin {
