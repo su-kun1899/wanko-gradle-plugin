@@ -15,7 +15,7 @@ dependencies {
     implementation gradleApi()
     implementation localGroovy()
     testImplementation gradleTestKit()
-    testImplementation("org.spockframework:spock-core:1.2-groovy-2.4") {
+    testImplementation("org.spockframework:spock-core:2.0-groovy-3.0") {
         // FIXME groovy-all is loaded in version 2.4.12 and you are trying to load version 2.4.15
         // refs: https://qiita.com/ksoichiro/items/6479d71a7712a2f49c19
         exclude group: 'org.codehaus.groovy', module: 'groovy-all'
